@@ -1,4 +1,4 @@
-package com.example.batchprocessing;
+package com;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BatchProcessingApplication {
 
 	public static void main(String[] args) throws Exception {
-		System.exit(SpringApplication.exit(SpringApplication.run(BatchProcessingApplication.class, args)));
+		SpringApplication.run(BatchProcessingApplication.class, args);
+/*
+		System.exit(SpringApplication.exit(SpringApplication.runInternal(BatchProcessingApplication.class, args)));
+*/
 	}
 }

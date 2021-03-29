@@ -1,0 +1,35 @@
+<beans:beans xmlns="http://www.springframework.org/schema/batch"
+xmlns:beans="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="
+   http://www.springframework.org/schema/beans
+   https://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/batch
+   https://www.springframework.org/schema/batch/spring-batch.xsd">
+
+<job id="ioSampleJob">
+    <step id="testStep1">
+<!--         <tasklet> -->
+<!--             <chunk reader="itemReader" writer="itemWriter" commit-interval="2"/> -->
+<!--         </tasklet> -->
+    </step>
+</job>
+
+
+<!-- 	 <job id="teststepjob"> -->
+<!-- 	    <step id="testStep1"  parent="s1" next="testStep2"/> -->
+<!-- 	    <step id="testStep2"  parent="s2" /> -->
+<!-- 	</job> -->
+<!-- 	<bean id="jobRepository" class="org...JobRepositoryFactoryBean"> -->
+<!-- 	    <property name="databaseType" value="mysql"/> -->
+<!-- 	    <property name="dataSource" ref="batch"/> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="jobLauncher" -->
+<!-- 	      class="org.springframework.batch.core.launch.support.SimpleJobLauncher"> -->
+<!-- 	    <property name="jobRepository" ref="jobRepository" /> -->
+<!-- 	</bean> -->
+
+</beans:beans>
+
+
+

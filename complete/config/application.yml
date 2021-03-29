@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+logging.config: ./config/logback-spring.xml
+
+
+
+
+      
