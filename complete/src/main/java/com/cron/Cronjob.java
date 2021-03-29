@@ -34,7 +34,7 @@ public class Cronjob {
     public void job3() throws Exception {
         System.out.println("自动跑批importUserJob2...........");
         JobParameters jobParameter = new JobParametersBuilder().addLong("time",System.currentTimeMillis()).toJobParameters();
-        JobExecution run = jobLauncher.run(importUserJob2, jobParameter);
+        JobExecution run =  jobLauncher.run(importUserJob2, jobParameter);
     }
 
 }
