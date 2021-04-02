@@ -21,8 +21,8 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 	
 	static List<String> jobIds = new ArrayList<String>();
 	static {
-//		jobIds.add("importDbjob");
-		jobIds.add("test111");
+		jobIds.add("importUserJob2");
+//		jobIds.add("test111");
 	}
 	
 	@Autowired

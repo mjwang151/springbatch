@@ -30,7 +30,7 @@ public class Cronjob {
     @Qualifier("importUserJob2")
     private Job importUserJob2;
 
-    @Scheduled(cron = "*/10 * * * * ?")
+//    @Scheduled(cron = "*/10 * * * * ?")
     public void job3() throws Exception {
         System.out.println("自动跑批importUserJob2...........");
         JobParameters jobParameter = new JobParametersBuilder().addLong("time",System.currentTimeMillis()).toJobParameters();

@@ -55,7 +55,7 @@ public class TodayQueryCountTask {
         
         queryProvider.setSelectClause("queryaccount as firstName,transcode as thirdName,count(*) as lastName");            //设置查询的列
         queryProvider.setFromClause("from eds_query_history2");     //设置查询的表
-        queryProvider.setWhereClause("where begintime>'2020/01/01'");
+        queryProvider.setWhereClause("where begintime>'2021/01/01'");
         queryProvider.setGroupClause("group by queryaccount,transcode");
         Map<String, Order> sortKeys = new HashMap<>(); //定义一个map，用于存放排序列
         sortKeys.put("firstName", Order.ASCENDING);           //按id列升序排列

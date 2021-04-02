@@ -1,7 +1,12 @@
 spring:
   profiles:
     active: dev
+#打开或关闭启动跑批
+  batch:
+    job:
+      enabled: true
 logging.config: ./config/logback-spring.xml
+provAndCity.config: ./config/provAndCity.conf
 
 
 
