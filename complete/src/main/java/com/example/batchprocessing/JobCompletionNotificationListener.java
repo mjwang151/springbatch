@@ -22,7 +22,11 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 	static List<String> jobIds = new ArrayList<String>();
 	static {
 		jobIds.add("importUserJob2");
-//		jobIds.add("test111");
+		jobIds.add("test111");
+		jobIds.add("devbankcashJob");
+		jobIds.add("importUserJob");
+
+
 	}
 	
 	@Autowired
@@ -33,12 +37,12 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 	@Override
 	public void beforeJob(JobExecution jobExecution) {
 		log.info("===================JOB任务开始运行【"+jobExecution.getJobInstance().getJobName()+"】，jobid为【"+jobExecution.getId()+"】=====================");
-		if(jobIds.contains(jobExecution.getJobInstance().getJobName())) {
+//		if(jobIds.contains(jobExecution.getJobInstance().getJobName())) {
 			super.beforeJob(jobExecution);
-		}else {
-			jobExecution.stop();
-			log.info("===================JOB任务无需运行【"+jobExecution.getJobInstance().getJobName()+"】，jobid为【"+jobExecution.getId()+"】=====================");
-		}
+//		}else {
+//			jobExecution.stop();
+//			log.info("===================JOB任务无需运行【"+jobExecution.getJobInstance().getJobName()+"】，jobid为【"+jobExecution.getId()+"】=====================");
+//		}
 		
 	}
 	

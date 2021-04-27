@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -33,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 
-// tag::setup[]
 @Configuration
 @EnableBatchProcessing
 public class BatchDistributedMap {
@@ -46,7 +46,7 @@ public class BatchDistributedMap {
 
     // tag::jobstep[]
     @Bean("importUserJob2")
-    public Job importUserJob2(JobCompletionNotificationListener listener, @Qualifier("step2") Step step) {
+    public Job importUserJob2(JobCompletionNotificationListener listener, @Qualifier("batchDistributedstep") Step step) {
         return jobBuilderFactory.get("importUserJob2")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
@@ -68,13 +68,13 @@ public class BatchDistributedMap {
     BaiduSearchIp baiduSearchIp;
 
     @Bean
-    public Step step2() {
-        return stepBuilderFactory.get("step2").tasklet(new Tasklet() {
+    public Step batchDistributedstep() {
+        return stepBuilderFactory.get("batchDistributedstep").tasklet(new Tasklet() {
             @Override
             public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                 String date = DateUtils.format(new Date(), "yyyy-MM-dd");
                 String getTotaySql = "select requestaddr as reqAddr,count(*) as querycount from eds_query_history2 where begintime>? and requestaddr is not null and requestaddr <>'' group by requestaddr";
-                List<QueryDistributedBean> list = fin_dwJdbcTemplate.query(getTotaySql, new Object[]{"2010/01/01"}, new BeanPropertyRowMapper<QueryDistributedBean>(QueryDistributedBean.class));
+                List<QueryDistributedBean> list = fin_dwJdbcTemplate.query(getTotaySql, new ArgumentPreparedStatementSetter(new Object[]{"2010/01/01"}), new BeanPropertyRowMapper<QueryDistributedBean>(QueryDistributedBean.class));
                 String sql = "INSERT INTO query_Distributed_Map (datadate, province , city, querycount,province_shortName) VALUES (?,?,?,?,?)";
                 Map<String, QueryDistributedBean> map = initCity();
                 list.stream().forEach(v -> {
@@ -93,8 +93,11 @@ public class BatchDistributedMap {
                         }
                     }
                 });
+                if(map != null && map.size() >0){
+                    jdbcTemplate.execute("delete from query_Distributed_Map where 1=1");
+                }
                 for (Map.Entry<String, QueryDistributedBean> entry : map.entrySet()) {
-                    jdbcTemplate.update(sql, new Object[]{entry.getValue().getDatadate(), entry.getValue().getProvince(), entry.getValue().getCity(), entry.getValue().getQuerycount(),entry.getValue().getProvince_shortName()});
+                    jdbcTemplate.update(sql, new Object[]{entry.getValue().getDatadate(), entry.getValue().getProvince(), entry.getValue().getCity(), entry.getValue().getQuerycount(), entry.getValue().getProvince_shortName()});
                 }
                 return null;
             }
@@ -132,14 +135,14 @@ public class BatchDistributedMap {
     }
 
     /**
-     *
      * @param prov
      * @return
      */
     public static String getShortName(String prov) {
         String regex = "回族自治区|自治区|壮族自治区|维吾尔自治区|特别行政区|市|省|区";
-        return prov.replaceAll(regex,"");
+        return prov.replaceAll(regex, "");
 
     }
+
 
 }

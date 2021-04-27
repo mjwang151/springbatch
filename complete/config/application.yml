@@ -4,7 +4,7 @@ spring:
 #打开或关闭启动跑批
   batch:
     job:
-      enabled: true
+      enabled: false
 logging.config: ./config/logback-spring.xml
 provAndCity.config: ./config/provAndCity.conf
 
